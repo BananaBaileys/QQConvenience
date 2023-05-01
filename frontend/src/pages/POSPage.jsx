@@ -7,6 +7,7 @@ function POSPage() {
 
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [cart, setCart] = useState([]);
 
     //get backend 'products' and put it in result
     const fetchProducts = async() => {
@@ -16,6 +17,9 @@ function POSPage() {
         setIsLoading(false);
     }
 
+    const addProductToCart = async(product) =>{
+
+    }
     useEffect(() => {
         fetchProducts();
     },[]);
@@ -29,13 +33,14 @@ function POSPage() {
                {isLoading ? 'Loading' : <div className='row'>
                     {products.map((product, key) =>
                         <div key={key} className='col-lg-4'>
-                            <div className='border'>
+                            <div className='border' onClick={() => addProductToCart(product)}>
                                 <p>{product.name}</p>
-                                <img src={product.img} className="img-fluid" alt={product.name} />
+                                <img src={product.image} className="img-fluid" alt={product.name} />
                                 <p>${product.price}</p>
                                 </div>
                             </div>
-
+//29:00
+// why you no work man
                     )}
                 </div>}
               
