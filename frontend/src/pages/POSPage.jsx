@@ -46,6 +46,9 @@ function POSPage() {
               
             </div>
             <div className='col-lg-4'></div>
+                <div style={{display: "none"}}>
+                    <ComponentToPrint cart={cart} totalAmount={totalAmount} ref={componentRef}/>
+                </div>
         </div>
    </MainLayout>
   )
