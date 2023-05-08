@@ -49,6 +49,20 @@ function POSPage() {
                 <div style={{display: "none"}}>
                     <ComponentToPrint cart={cart} totalAmount={totalAmount} ref={componentRef}/>
                 </div>
+                <div className='table-responsive bg-dark'>
+                    <table className='table table-responsive table-dark table-hover'>
+                        <thread>
+                            <tr>
+                                <td>#</td>
+                                <td>Name</td>
+                                <td>Price</td>
+                                <td>Qty</td>
+                                <td>Total</td>
+                                <td>Action</td>
+                            </tr>
+                        </thread>
+                    </table>
+                </div>
         </div>
    </MainLayout>
   )
