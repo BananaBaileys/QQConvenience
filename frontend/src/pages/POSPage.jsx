@@ -12,6 +12,11 @@ function POSPage() {
     const [cart, setCart] = useState([]);
     const [totalAmount, setTotalAmount] = useState(0);
 
+    const toastOptions = {
+        autoClose: 400,
+        pauseOnHover: true,
+    }
+
     //get backend 'products' and put it in result
     const fetchProducts = async() => {
         setIsLoading(true);
@@ -21,13 +26,68 @@ function POSPage() {
     }
 
     const addProductToCart = async(product) =>{
+        // check if the adding product exist
+        let findProductInCart = await cart.find( i=>{
+            return i.id === product.id
+        });
+
+        if (findProductInCart) {
+            let newCart = [];
+            let newItem;
+
+            cart.forEach(cartItem => {
+                if(cartItem.id === product.id) {
+                    newItem = {
+                        ...cartItem,
+                        quantity: cartItem.quantity + 1,
+                        totalAmount: cartItem.price * (cartItem.quantity + 1)
+                    }
+                    newCart.push(newItem);
+                } else {
+                    newCart.push(cartItem);
+                }
+            });
+
+            setCart(newCart);
+            toast(`Added ${newItem.name} to cart`, toastOptions)
+        } else {
+            let addingProduct = {
+                ...product,
+                'quantity': 1,
+                'totalAmount': product.price,
+            }
+            setCart([...cart, addingProduct]);
+            toast(`Added ${product.name} to cart`, toastOptions)
+        }
 
     }
+
+    const removeProduct = async(product) =>{
+        const newCart = cart.filter(cartItem => cartItem.id !== product.id);
+        setCart(newCart);
+    }
+
+    const componentRef = useRef();
+
+    const handleReactToPrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
+
+    const handlePrint = () => {
+        handleReactToPrint();
+    }
+
     useEffect(() => {
         fetchProducts();
     },[]);
 
-
+    useEffect(() => {
+        let newTotalAmount = 0;
+        cart.forEach(icart => {
+            newTotalAmount = newTotalAmount + parseInt(icart.totalAmount);
+        })
+        setTotalAmount(newTotalAmount);
+    },[cart])
 
   return (
    <MainLayout>
