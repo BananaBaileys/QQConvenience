@@ -2,12 +2,15 @@ import React from 'react'
 import { useEffect, useState} from 'react'
 import MainLayout from '../layouts/MainLayout'
 import axios from "axios"
+import { ComponentToPrint } from '../components/ComponentsToPrint';
+import { useReactToPrint } from 'react-to-print';
 
 function POSPage() {
 
     const [products, setProducts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [cart, setCart] = useState([]);
+    const [totalAmount, setTotalAmount] = useState(0);
 
     //get backend 'products' and put it in result
     const fetchProducts = async() => {
